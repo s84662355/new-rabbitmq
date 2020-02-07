@@ -15,29 +15,29 @@ use PhpAmqpLib\Wire\AMQPTable;
 
 class MQDriver
 {
-    private $connection = null;
+    protected $connection = null;
 
-    private $exchange_pool = [];
+    protected $exchange_pool = [];
 
-    private $queue_pool = [];
+    protected $queue_pool = [];
 
-    private $redis = null;
+    protected $redis = null;
 
-    private $connection_name = '';
+    protected $connection_name = '';
 
-    private $config = null;
+    protected $config = null;
 
-    private $channel = null;
+    protected $channel = null;
 
-    private $publisher_instance = [];
+    protected $publisher_instance = [];
 
-    private $publish_driver_config = [];
+    protected $publish_driver_config = [];
 
-    private $default_publish ;
+    protected $default_publish ;
 
-    private $consume_driver_config = [];
+    protected $consume_driver_config = [];
 
-    private $default_consume ;
+    protected $default_consume ;
 
     public function __construct(array $config)
     {
@@ -142,7 +142,7 @@ class MQDriver
     }
 
 
-    private function publisher(string $type): MQPublisher
+    protected function publisher(string $type): MQPublisher
     {
         switch ($type) {
             case 'confirm':
@@ -290,7 +290,7 @@ class MQDriver
     }
 
 
-    private function init_consume(array  $config)
+    protected function init_consume(array  $config)
     {
 
         if(!empty($config['timedelay'])){
