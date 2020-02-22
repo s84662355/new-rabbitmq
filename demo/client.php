@@ -14,11 +14,11 @@ $config = [
     'default' =>   'first' ,
     'driver' => [
         'first' => [
-            'host' =>  '47.112.128.19',
+            'host' =>  '127.0.0.1',
             'port' =>   5672 ,
             'vhost' =>   '/' ,
             'username' =>   'guest' ,
-            'password' =>  '123456' ,
+            'password' =>   'guest' ,
 
 
             'publish' => [
@@ -70,7 +70,7 @@ $config = [
                         'durable' => true,
                         'consumer_tag' => '1322423',
                         'queue' => 'aaaaa423',
-                        'timedelay'  => 5000,
+                        'timedelay'  => 100000,
                         'listener' => 'Test',
                         /// 'log_path' =>storage_path("logs/"  . "TestConsume.log"),
                         'arguments' => [
@@ -94,7 +94,7 @@ $job = new MQJob($config );
  //$job->send('ssdsdsdsdsdss');
 //return ;
  for ($i = 0 ;$i < 1;$i++)
-  $job->send('shdsdss',false,false);
+  $job->send('shdsdss',false );
 ///
 ///
 

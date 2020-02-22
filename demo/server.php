@@ -13,16 +13,28 @@ $config = [
     'default' =>   'first' ,
     'driver' => [
         'first' => [
-            'host' =>  '47.112.128.19',
+            'host' =>  '127.0.0.1',
             'port' =>   5672 ,
             'vhost' =>   '/' ,
             'username' =>   'guest' ,
-            'password' =>  '123456' ,
+            'password' =>   'guest' ,
+
+
+
 
 
             'publish' => [
                 'default' =>  '1',
+                'driver' => [
+            
+
+                ],
+
             ],
+
+
+
+
 
             'consume' => [
                 'default' =>   'first' ,
@@ -32,7 +44,7 @@ $config = [
                         'durable' => true,
                         'consumer_tag' => '1322423',
                         'queue' => 'aaaaa423',
-                        'timedelay'  => 5000,
+                        'timedelay'  => 10000,
                         'listener' => 'Test',
                          'log_path' => "TestConsume.log" ,
                         'arguments' => [
@@ -76,6 +88,8 @@ class Test extends AbstractConsume
     public function process_message( $body,$config)
     {
         echo $body;
+
+        echo "sadsadsad";
 
         return AbstractConsume::ACK;
     }

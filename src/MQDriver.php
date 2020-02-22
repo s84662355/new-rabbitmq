@@ -213,11 +213,12 @@ class MQDriver
         if(!empty($config['delayed']))
         {
 
-             $msg_config['queue'] = 'cache_'.$config['queue']['name'];
+            // $msg_config['queue'] = 'cache_'.$config['queue']['name'];
+             $msg_config['queue'] =  $config['queue']['name'];
         }else if(!empty($config['exchange'])){
 
 
-            //// $this->exchange($config['exchange']['name'], $config['exchange']['type']  );
+              $this->exchange($config['exchange']['name'], $config['exchange']['type']  );
 
 
             #####################
@@ -226,13 +227,13 @@ class MQDriver
 
 
 
-            /*
+             
             $this->QueueBind(
                 $config['queue']['name'],
                 $config['exchange']['name'],
                   $config['exchange']['routing_key']
             );
-            */
+           
 
             $msg_config = [
                'routing_key' => $config['exchange']['routing_key'],
@@ -290,11 +291,11 @@ class MQDriver
     }
 
 
-    protected function init_consume(array  $config)
+    protected function init_consume(array  &$config)
     {
 
         if(!empty($config['timedelay'])){
-
+/*
             $this->exchange(
                 'dead-exchange',
                 'direct' ,
@@ -320,6 +321,39 @@ class MQDriver
                 'dead-exchange',
                 'dead_'.$config['queue'].'_key'
             );
+*/
+
+            $this->exchange(
+                'dead-exchange',
+                'direct' ,
+                true);
+
+            $this->cache_queue(
+                $config['queue'],
+                true ,
+                'dead-exchange',
+                'dead_'.$config['queue'].'_key',
+                 intval($config['timedelay'])
+            );
+
+            $this->queue
+            (
+               'cache_'.$config['queue'],
+                $config['durable'],
+                $config['arguments']
+            );
+
+            $this->QueueBind(
+                'cache_'.$config['queue'],
+                'dead-exchange',
+                'dead_'.$config['queue'].'_key'
+            );
+
+
+            $config['queue'] =  'cache_'.$config['queue'];
+
+
+
         }else{
             $this->queue
             (
