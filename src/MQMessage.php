@@ -40,7 +40,11 @@ class MQMessage{
         ###持久化
         $this->config['delivery_mode'] = AMQPMessage::DELIVERY_MODE_PERSISTENT;
 
-        $this->config['message_id'] =  date('Ymdhis'). md5(rand(10000,100000).uniqid().str_shuffle($this->str)) ;
+        if(empty($config['message_id'])){
+            $this->config['message_id'] =  date('Ymdhis'). md5(rand(10000,100000).uniqid().str_shuffle($this->str)) ;
+        }else{
+            $this->config['message_id']  = $config['message_id'];
+        }
 
 
         if(!empty($config['exchange'])){
